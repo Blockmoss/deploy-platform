@@ -9,16 +9,10 @@ dotenv.config();
 
 const app = express();
 
-// Capture raw body for signature verification
-app.use(express.json({
-  verify: (req, res, buf) => {
-    req.rawBody = buf;
-  }
-}));
-
 // Routes
-app.use('/health', healthRouter);
 app.use('/webhook/github', webhookRouter);
+app.use(express.json());
+app.use('/health', healthRouter);
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
